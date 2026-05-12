@@ -1,8 +1,5 @@
 <?php
-/**
- * db_connection.php
- * Waves of Ink — Secure PDO Database Connection
- */
+
 
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'ink');
@@ -10,9 +7,7 @@ define('DB_USER', 'root');       // ← Change to your MySQL username
 define('DB_PASS', '');           // ← Change to your MySQL password
 define('DB_CHARSET', 'utf8mb4');
 
-/**
- * Returns a singleton PDO instance.
- */
+
 function getDB(): PDO {
     static $pdo = null;
 
@@ -31,7 +26,7 @@ function getDB(): PDO {
         try {
             $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
         } catch (PDOException $e) {
-            // Never expose real errors in production
+           
             http_response_code(500);
             die(json_encode(['success' => false, 'message' => 'Database connection failed.']));
         }

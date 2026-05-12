@@ -1,15 +1,10 @@
 <?php
-/**
- * controllers/SeriesController.php
- * Waves of Ink — Handles all series_* AJAX actions.
- */
 
 class SeriesController
 {
     public function __construct(private SeriesModel $seriesModel) {}
 
-    // ── action: series_list ──────────────────────────────────────
-
+  
     public function list(): never
     {
         $author = clean($_GET['author'] ?? '');
@@ -22,7 +17,7 @@ class SeriesController
         jsonResponse(true, extra: ['data' => $series]);
     }
 
-    // ── action: series_get ───────────────────────────────────────
+  
 
     public function get(): never
     {
@@ -41,7 +36,7 @@ class SeriesController
         jsonResponse(true, extra: ['data' => ['series' => $series, 'books' => $books]]);
     }
 
-    // ── action: series_add ──────────────────────────────────────
+   
 
     public function add(): never
     {
@@ -62,7 +57,7 @@ class SeriesController
         jsonResponse(true, 'Series added successfully!', ['id' => $newId]);
     }
 
-    // ── action: series_edit ──────────────────────────────────────
+    
 
     public function edit(): never
     {

@@ -1,26 +1,4 @@
 <?php
-/**
- * process.php
- * Waves of Ink — AJAX entry point.
- *
- * Responsibilities here are intentionally minimal:
- *   1. Bootstrap (session, DB, schema, constants, helpers)
- *   2. Route the incoming `action` to the correct controller method
- *
- * Business logic lives in:
- *   controllers/BookController.php
- *   controllers/SeriesController.php
- *
- * Data access lives in:
- *   models/BookModel.php
- *   models/SeriesModel.php
- *
- * Shared utilities live in:
- *   config/constants.php
- *   helpers/utils.php
- *   helpers/upload.php
- *   helpers/schema.php
- */
 
 session_start();
 

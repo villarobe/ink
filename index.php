@@ -1,8 +1,4 @@
 <?php
-/**
- * index.php
- * Waves of Ink - Main Dashboard
- */
 session_start();
 ?>
 <!DOCTYPE html>

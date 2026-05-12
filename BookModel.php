@@ -52,11 +52,7 @@ class BookModel
         return $row ? (string) $row['book_cover'] : false;
     }
 
-    // ── Write ─────────────────────────────────────────────────────
-
-    /**
-     * Insert a new book record and return the new ID.
-     */
+ 
     public function create(
         string  $title,
         string  $author,

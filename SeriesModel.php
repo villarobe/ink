@@ -1,18 +1,10 @@
 <?php
-/**
- * models/SeriesModel.php
- * Waves of Ink — Data-access layer for the book_series table.
- */
 
 class SeriesModel
 {
     public function __construct(private PDO $pdo) {}
 
-    // ── Fetch ────────────────────────────────────────────────────
-
-    /**
-     * Return a single series row by its primary key, or false if not found.
-     */
+  
     public function findById(int $id): array|false
     {
         $stmt = $this->pdo->prepare(
@@ -25,9 +17,6 @@ class SeriesModel
         return $stmt->fetch();
     }
 
-    /**
-     * Return all series, optionally filtered by author.
-     */
     public function findAll(string $author = ''): array
     {
         if ($author !== '') {
@@ -48,9 +37,7 @@ class SeriesModel
         return $stmt->fetchAll();
     }
 
-    /**
-     * Return the books that belong to a given series.
-     */
+ 
     public function findBooks(int $seriesId): array
     {
         $stmt = $this->pdo->prepare(
@@ -64,11 +51,7 @@ class SeriesModel
         return $stmt->fetchAll();
     }
 
-    // ── Lookup / upsert helpers ──────────────────────────────────
-
-    /**
-     * Return the ID of an existing series (by author + name), or null.
-     */
+   
     public function findIdByAuthorAndName(string $author, string $seriesName): ?int
     {
         $stmt = $this->pdo->prepare(
@@ -82,10 +65,7 @@ class SeriesModel
         return $id !== false ? (int) $id : null;
     }
 
-    /**
-     * Return the ID of a series that matches the given author, or null.
-     * Used when the caller passes an existing series_id.
-     */
+   
     public function validateIdForAuthor(int $id, string $author): ?int
     {
         $stmt = $this->pdo->prepare(
@@ -99,11 +79,6 @@ class SeriesModel
         return $found !== false ? (int) $found : null;
     }
 
-    // ── Write ────────────────────────────────────────────────────
-
-    /**
-     * Insert a new series row and return its new ID.
-     */
     public function create(string $author, string $seriesName): int
     {
         $stmt = $this->pdo->prepare(
@@ -124,10 +99,7 @@ class SeriesModel
         $stmt->execute([$author, $seriesName, $id]);
     }
 
-    /**
-     * Check whether a given name already exists for this author,
-     * excluding the row with $excludeId (used for edit-collision checks).
-     */
+    
     public function nameExistsForAuthor(string $author, string $seriesName, int $excludeId = 0): bool
     {
         $stmt = $this->pdo->prepare(
@@ -140,14 +112,7 @@ class SeriesModel
         return (bool) $stmt->fetchColumn();
     }
 
-    // ── findOrCreate (used by book add/edit) ─────────────────────
-
-    /**
-     * Resolve a series_id for a book form submission.
-     *
-     * Priority: new_series_name (creates if absent) → existing series_id.
-     * Returns null when the resolved series doesn't belong to $author.
-     */
+   
     public function findOrCreate(string $author, string $seriesIdRaw, string $newSeriesRaw): ?int
     {
         $newSeries = trim($newSeriesRaw);

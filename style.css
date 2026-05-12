@@ -48,13 +48,31 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--rose-deep); border-radius: 4px; }
 
 /* ── Navbar ── */
-.navbar-woi {
+.sidebar-woi {
   background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-mid) 60%, var(--brown-light) 100%);
-  padding: 14px 0;
-  box-shadow: 0 4px 24px rgba(92,51,23,.35);
-  position: sticky;
+  box-shadow: -4px 0 24px rgba(92,51,23,.28);
+  position: fixed;
   top: 0;
+  right: 0;
+  width: 260px;
+  height: 100vh;
+  padding: 28px 22px;
   z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  overflow-y: auto;
+}
+
+.main-content {
+  margin-right: 260px;
+  min-height: 100vh;
+  padding: 0 28px;
+}
+
+.sidebar-brand {
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(234,192,196,.24);
 }
 
 .navbar-brand-woi {
@@ -82,6 +100,11 @@ body {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.sidebar-actions {
+  display: grid;
+  gap: 10px;
 }
 
 
@@ -153,37 +176,40 @@ body {
 /* ── Filter / Author Tabs ── */
 .filter-bar {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin: 0 auto 32px;
-  padding: 16px 18px;
-  width: fit-content;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  margin: 0;
+  padding: 16px 0 0;
+  width: 100%;
   max-width: 100%;
-  border-radius: 999px;
-  background: rgba(253,246,240,.84);
-  backdrop-filter: blur(4px);
-  box-shadow: 0 12px 28px rgba(92,51,23,.08);
+  border-top: 1px solid rgba(234,192,196,.24);
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
   position: relative;
   z-index: 2;
 }
 
 .filter-bar .btn-filter {
   border: 2px solid var(--rose-deep);
-  background: transparent;
-  color: var(--rose-deep);
-  border-radius: 50px;
-  padding: 6px 22px;
+  background: rgba(253,246,240,.08);
+  color: var(--rose-pale);
+  border-radius: 12px;
+  padding: 10px 14px;
   font-size: .875rem;
   font-weight: 700;
   cursor: pointer;
   transition: all .2s;
   letter-spacing: .04em;
+  text-align: left;
 }
 
 .filter-bar .btn-filter.active,
 .filter-bar .btn-filter:hover {
   background: var(--rose-deep);
+  border-color: var(--rose-light);
   color: #fff;
 }
 
@@ -203,6 +229,17 @@ body {
   align-items: center;
   gap: 8px;
   justify-content: center;
+}
+
+.btn-add-book.sidebar-action {
+  width: 100%;
+  height: auto;
+  min-height: 44px;
+  border-radius: 12px;
+  padding: 10px 14px;
+  justify-content: flex-start;
+  font-weight: 700;
+  letter-spacing: .04em;
 }
 
 .btn-add-book:hover {
@@ -846,10 +883,38 @@ textarea.form-control-woi {
 
 /* ── Responsive ── */
 @media (max-width: 576px) {
+  .sidebar-woi {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 20px 16px;
+    box-shadow: 0 4px 24px rgba(92,51,23,.24);
+  }
+  .main-content {
+    margin-right: 0;
+    padding: 0 12px;
+  }
+  .sidebar-brand {
+    padding-bottom: 16px;
+  }
+  .sidebar-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .filter-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 14px;
+  }
+  .filter-bar .btn-filter {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 8px 10px;
+  }
   .page-header {
     min-height: 300px;
     padding: 40px 0 96px;
-    margin-top: 32px;
+    margin-top: 20px;
   }
   .page-header-copy {
     text-align: center;
@@ -858,11 +923,6 @@ textarea.form-control-woi {
   .page-header p {
     margin-left: auto;
     margin-right: auto;
-  }
-  .filter-bar {
-    margin-top: 0;
-    padding: 0;
-    justify-content: center;
   }
   .form-row { grid-template-columns: 1fr; }
   .view-book-layout { flex-direction: column; }

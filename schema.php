@@ -1,12 +1,4 @@
 <?php
-/**
- * helpers/schema.php
- * Waves of Ink — One-time library schema bootstrap.
- *
- * Ensures `book_series` exists, `books.series_id` FK is present,
- * and every existing book is assigned to a "Standalone" series.
- * Safe to call on every request — the static flag prevents repeat work.
- */
 
 function ensureLibrarySchema(PDO $pdo): void
 {

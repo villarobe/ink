@@ -1,8 +1,4 @@
 <?php
-/**
- * controllers/BookController.php
- * Waves of Ink — Handles all book AJAX actions (list, get, add, edit, delete).
- */
 
 class BookController
 {
@@ -37,11 +33,10 @@ class BookController
     {
         [$title, $author, $genre, $desc, $status, $rating, $trigger] = $this->extractBookFields();
 
-        // Required-field check
         if (!$title || !$author || !$genre || !$desc) {
             jsonResponse(false, 'Please fill in all required fields.');
         }
-        // Whitelist checks
+        
         if (!in_array($author, ALLOWED_AUTHORS, true)) {
             jsonResponse(false, 'Invalid author selected.');
         }
@@ -52,7 +47,7 @@ class BookController
             jsonResponse(false, 'Invalid age rating.');
         }
 
-        // Resolve series
+        
         $seriesId = $this->seriesModel->findOrCreate(
             $author,
             clean($_POST['series_id'] ?? ''),

@@ -1,8 +1,5 @@
 <?php
-/**
- * config/constants.php
- * Waves of Ink — Global constants and configuration.
- */
+
 
 define('ALLOWED_AUTHORS',  ['Jonaxx', 'Inksteady']);
 define('ALLOWED_STATUSES', ['Ongoing', 'Completed']);
