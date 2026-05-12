@@ -7,45 +7,62 @@ session_start();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Waves of Ink - Digital Library</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  
 </head>
-<body>
-<nav class="navbar-woi">
-  <div class="container d-flex align-items-center justify-content-between">
-    <div>
-      <a class="navbar-brand-woi" href="#">Waves <span>of Ink</span></a>
-      <div class="navbar-subtitle">Digital Library</div>
-    </div>
-    <div class="top-actions">
-      <button class="btn-add-book btn-add-series" type="button" title="Add New Series" aria-label="Add New Series" data-bs-toggle="modal" data-bs-target="#seriesModal" onclick="openSeriesModal()">
-        <svg class="btn-action-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
-      </button>
-      <button class="btn-add-book" type="button" title="Add New Book" aria-label="Add New Book" data-bs-toggle="modal" data-bs-target="#addEditModal" onclick="openAddModal()">
-        <svg class="btn-action-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
-      </button>
-    </div>
-  </div>
-</nav>
+<body class="sidebar-layout">
 
-<div class="container">
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <a class="navbar-brand-woi" href="#">Waves <span>of Ink</span></a>
+    <div class="navbar-subtitle">Digital Library</div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="sidebar-nav-label">Library</div>
+    <button class="sidebar-nav-item active" data-filter="All" onclick="setSidebarFilter('All', this)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      All Books
+    </button>
+    <button class="sidebar-nav-item" data-filter="Ongoing" onclick="setSidebarFilter('Ongoing', this)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      Ongoing
+    </button>
+    <button class="sidebar-nav-item" data-filter="Completed" onclick="setSidebarFilter('Completed', this)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13l4 4L19 7"/></svg>
+      Completed
+    </button>
+
+    <div class="sidebar-nav-label">Authors</div>
+    <button class="sidebar-nav-item" data-filter="Jonaxx" onclick="setSidebarFilter('Jonaxx', this)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+      Jonaxx
+    </button>
+    <button class="sidebar-nav-item" data-filter="Inksteady" onclick="setSidebarFilter('Inksteady', this)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+      Inksteady
+    </button>
+  </nav>
+
+  <div class="sidebar-actions">
+    <button class="sidebar-action-btn" type="button" data-bs-toggle="modal" data-bs-target="#seriesModal" onclick="openSeriesModal()">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      New Series
+    </button>
+    <button class="sidebar-action-btn sidebar-action-btn--primary" type="button" data-bs-toggle="modal" data-bs-target="#addEditModal" onclick="openAddModal()">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+      Add Book
+    </button>
+  </div>
+</aside>
+
+<main class="main-content">
   <div class="page-header">
     <div class="page-header-copy">
       <h1>Welcome, Reader. Stay a While Between Stories.</h1>
       <p>A soft place for beloved worlds, favorite authors, and the next chapter waiting to be opened.</p>
     </div>
-  </div>
-
-  <div class="filter-bar">
-    <button class="btn-filter active" data-filter="All">All</button>
-    <button class="btn-filter" data-filter="Jonaxx">Jonaxx</button>
-    <button class="btn-filter" data-filter="Inksteady">Inksteady</button>
-    <button class="btn-filter" data-filter="Ongoing">Ongoing</button>
-    <button class="btn-filter" data-filter="Completed">Completed</button>
   </div>
 
   <div id="bookGrid" class="library-groups mb-5"></div>
@@ -58,8 +75,9 @@ session_start();
     <h3>No books found</h3>
     <p>Add your first book or change the filter.</p>
   </div>
-</div>
+</main>
 
+<!-- Series Modal -->
 <div class="modal fade" id="seriesModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -93,6 +111,7 @@ session_start();
   </div>
 </div>
 
+<!-- Series Detail Modal -->
 <div class="modal fade" id="seriesDetailModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -114,6 +133,7 @@ session_start();
   </div>
 </div>
 
+<!-- Add / Edit Book Modal -->
 <div class="modal fade" id="addEditModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -201,6 +221,7 @@ session_start();
   </div>
 </div>
 
+<!-- View Book Modal -->
 <div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
@@ -217,6 +238,7 @@ session_start();
   </div>
 </div>
 
+<!-- Delete Confirm Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-sm">
     <div class="modal-content text-center">
@@ -252,9 +274,15 @@ const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
 document.addEventListener('DOMContentLoaded', () => {
   loadBooks();
   initSeriesField();
-  initFilter();
   initCoverPreview();
 });
+
+function setSidebarFilter(filter, el) {
+  activeFilter = filter;
+  document.querySelectorAll('.sidebar-nav-item').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderGrid(allBooks);
+}
 
 async function loadBooks() {
   try {
@@ -297,10 +325,8 @@ function groupBooks(books) {
   return books.reduce((acc, book) => {
     const author = book.author || 'Unknown Author';
     const series = book.series_name || 'Standalone';
-
     if (!acc[author]) acc[author] = {};
     if (!acc[author][series]) acc[author][series] = [];
-
     acc[author][series].push(book);
     return acc;
   }, {});
@@ -597,9 +623,7 @@ async function saveBook() {
 
     if (json.success) {
       showToast(json.message, 'success');
-      if (author) {
-        delete seriesByAuthor[author];
-      }
+      if (author) delete seriesByAuthor[author];
       addEditModal.hide();
       clearForm();
       loadBooks();
@@ -651,17 +675,6 @@ document.getElementById('confirmDeleteBtn').addEventListener('click', async () =
   }
 });
 
-function initFilter() {
-  document.querySelectorAll('.btn-filter').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeFilter = btn.dataset.filter;
-      renderGrid(allBooks);
-    });
-  });
-}
-
 function initSeriesField() {
   document.getElementById('bookAuthor').addEventListener('change', async function () {
     document.getElementById('newSeriesName').value = '';
@@ -689,11 +702,10 @@ async function syncSeriesOptions(author, selectedSeriesId = '') {
 
     seriesByAuthor[author] = json.data;
     seriesSelect.disabled = false;
-    seriesSelect.innerHTML = '<option value="">Select Series</option>' + json.data.map(series => `<option value="${escHTML(series.id)}">${escHTML(series.series_name)}</option>`).join('');
+    seriesSelect.innerHTML = '<option value="">Select Series</option>' +
+      json.data.map(s => `<option value="${escHTML(s.id)}">${escHTML(s.series_name)}</option>`).join('');
 
-    if (selectedSeriesId) {
-      seriesSelect.value = String(selectedSeriesId);
-    }
+    if (selectedSeriesId) seriesSelect.value = String(selectedSeriesId);
   } catch (e) {
     showToast('Failed to load book series.', 'error');
   }
